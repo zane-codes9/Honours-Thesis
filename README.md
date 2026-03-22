@@ -5,7 +5,9 @@
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.33+-ff4b4b.svg)](https://streamlit.io)
 
-Metabolic data analysis is extremely laborious and time-consuming. CLAMSer is an open-source, completely free tool for metabolic data processing. Specifically tailored for Columbus Instruments CLAMS systems, common in molecular biology labs.
+Metabolic data analysis is laborious and time-consuming. CLAMSer is an open-source, completely free tool for metabolic data processing. Specifically tailored for Columbus Instruments CLAMS systems, common in molecular biology labs. 
+
+Done in completion of honours thesis for my BSc. 
 
 **[➡️ Application](https://clamser.streamlit.app/)**
 
@@ -13,8 +15,7 @@ Metabolic data analysis is extremely laborious and time-consuming. CLAMSer is an
 
 ---
 
-(placeholder - flowchart showing CLAMSer flow)
-![CLAMSer Workflow GIF](https://github.com/Zane-K/CLAMSer/blob/main/assets/clamser_demo.gif?raw=true)
+<img width="422" height="622" alt="Screenshot 2026-03-22 at 3 47 24 pm" src="https://github.com/user-attachments/assets/2fa2ca46-b5ec-4376-9c6d-04f1d5b09796" />
 
 ## Features of CLAMSer
 
