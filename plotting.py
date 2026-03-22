@@ -8,7 +8,7 @@ from datetime import time, timedelta
 
 def create_timeline_chart(df, light_start, light_end, parameter_name):
     """
-    Generates an interactive Plotly timeline chart.
+    Generates Plotly timeline chart.
     Draws a continuous line PER ANIMAL, then overlays markers for outliers.
     """
     
