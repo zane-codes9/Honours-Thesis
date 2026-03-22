@@ -10,6 +10,7 @@ A Software for High-Throughput Analysis of Metabolic Data from the CLAMS Oxymax 
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.33+-ff4b4b.svg)](https://streamlit.io)
 
 **[➡️ Click here to go to the Application](https://clamser.streamlit.app/)**
+
 **[▶️ Video Walkthrough](https://www.youtube.com/watch?v=LuBnGmRzcB8)**
 
 --
