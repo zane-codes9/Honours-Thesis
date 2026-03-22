@@ -43,24 +43,18 @@ def parse_clams_header(lines):
                 parameter = name_part[:paren_pos].strip() if paren_pos != -1 else name_part
         elif 'group/cage' in first_part:
             if len(parts) > 1:
-                # This line is now safe from crashing the entire app
                 current_cage_num_str = parts[1].lstrip('0')
         elif 'subject id' in first_part and current_cage_num_str is not None:
             if len(parts) > 1:
                 subject_id = parts[1]
-                # --- FIX 1: Add try-except block for robustness ---
                 try:
                     cage_key = f"CAGE {int(current_cage_num_str):04d}"
                     animal_ids[cage_key] = subject_id
                 except (ValueError, TypeError):
-                    # This line is malformed, log it and skip this entry
                     print(f"Warning: Could not parse cage number '{current_cage_num_str}'. Skipping.")
                 finally:
-                    # Always reset to avoid carrying over a bad value
                     current_cage_num_str = None
 
-    # If the :DATA marker was never found, this is not a data file.
-    # Return silently; the calling function will handle skipping it.
     if data_start_line == -1:
         return None, None, -1
 
@@ -84,7 +78,6 @@ def parse_clams_data(lines, data_start_line, animal_ids):
     try:
         header_line_index = -1
         header_line_str = ""
-        # Find the actual header line by skipping blank lines and decorators after :DATA
         for i, line in enumerate(lines[data_start_line + 1:]):
             clean_line = line.strip()
             if clean_line and not clean_line.startswith('==='):
@@ -96,10 +89,8 @@ def parse_clams_data(lines, data_start_line, animal_ids):
             st.error("Could not find the 'INTERVAL' data header row after the :DATA marker.")
             return None
 
-        # --- FIX 1: DYNAMIC DELIMITER DETECTION ---
         separator = ',' if header_line_str.count(',') > header_line_str.count('\t') else '\t'
 
-        # Join the relevant lines into a single string for pandas, starting from the true header
         data_as_string = "\n".join(lines[header_line_index:])
         
         df_wide = pd.read_csv(
@@ -107,7 +98,6 @@ def parse_clams_data(lines, data_start_line, animal_ids):
             sep=separator,
             on_bad_lines='skip',
             low_memory=False,
-            # This is crucial for comma-separated files with spaces like the example
             skipinitialspace=True if separator == ',' else False 
         )
 
@@ -115,7 +105,6 @@ def parse_clams_data(lines, data_start_line, animal_ids):
         st.error(f"Error reading the data section with Pandas: {e}")
         return None
 
-    # Clean column names by stripping whitespace
     df_wide.columns = [str(col).strip() for col in df_wide.columns]
 
     if 'INTERVAL' not in df_wide.columns:
@@ -146,16 +135,13 @@ def parse_clams_data(lines, data_start_line, animal_ids):
     df_tidy = pd.concat(all_animals_data, ignore_index=True)
     df_tidy.dropna(subset=['timestamp', 'value'], inplace=True)
     
-    # --- FIX 2: ROBUST TIMESTAMP PARSING ---
-    # Explicitly set dayfirst=True to handle dd/mm/yyyy format common in non-US locales.
-    # This prevents misinterpreting dates like '13/09/2024' and solves the "spiderweb" plot issue.
+ 
     df_tidy['timestamp'] = pd.to_datetime(df_tidy['timestamp'], dayfirst=True, errors='coerce')
     df_tidy['value'] = pd.to_numeric(df_tidy['value'], errors='coerce')
     
     df_tidy.dropna(subset=['timestamp', 'value'], inplace=True)
     
-    # --- FIX 3: FILTER JUNK ROWS ---
-    # Filter out the common zero-value artifact rows at the end of files.
+
     df_tidy = df_tidy[df_tidy['value'] != 0]
 
     df_tidy = df_tidy[['animal_id', 'timestamp', 'value']]
@@ -188,7 +174,7 @@ def parse_mass_data(mass_input, mass_type_name: str):
         )
         df['mass'] = pd.to_numeric(df['mass'], errors='coerce')
         if df['mass'].isnull().any():
-            return None, f"The '{mass_type_name}' column contains non-numeric values. Please check your data."
+            return None, f"The '{mass_type_name}' column contains non-numeric values. Check your data."
 
         mass_map = df.set_index('animal_id')['mass'].to_dict()
         mass_map = {str(k).strip(): float(v) for k, v in mass_map.items()}
@@ -224,11 +210,9 @@ def filter_data_by_time(df, time_window_option, custom_start, custom_end):
         
     elif time_window_option == "Custom...":
         if custom_start is None or custom_end is None or custom_start >= custom_end:
-            # Add a user-facing warning for invalid custom range.
-            st.warning("For 'Custom' time window, please ensure 'Analysis End' is greater than 'Analysis Start'.", icon="⚠️")
-            return pd.DataFrame() # Return an empty frame to prevent downstream errors
+            st.warning("For 'Custom' time window, please ensure 'Analysis End' is greater than 'Analysis Start'.")
+            return pd.DataFrame() 
 
-        # --- NEW LOGIC: Filter by hours from the start of the experiment ---
         t_zero = df_copy['timestamp'].min()
         df_copy['elapsed_hours'] = (df_copy['timestamp'] - t_zero).dt.total_seconds() / 3600
         
@@ -237,7 +221,6 @@ def filter_data_by_time(df, time_window_option, custom_start, custom_end):
             (df_copy['elapsed_hours'] <= custom_end)
         ].copy()
 
-        # Drop the temporary column before returning
         return filtered_df.drop(columns=['elapsed_hours'])
         
     return df_copy
@@ -245,7 +228,7 @@ def filter_data_by_time(df, time_window_option, custom_start, custom_end):
 def add_light_dark_cycle_info(df, light_start, light_end):
     """Adds a 'period' column (Light/Dark) to the dataframe."""
     if not isinstance(df, pd.DataFrame) or 'timestamp' not in df.columns or df.empty:
-        return df # Return original/empty df if invalid
+        return df 
 
     df_copy = df.copy()
 
@@ -326,7 +309,6 @@ def apply_normalization(df, mode, body_weight_map, lean_mass_map):
     return df_normalized, missing_animal_ids, None
 
 
-# --- NEW FUNCTION: OUTLIER FLAGGING ---
 def flag_outliers(df, sd_threshold):
     """
     Flags outliers on a per-animal basis using the standard deviation method.
@@ -363,11 +345,9 @@ def calculate_summary_stats_per_animal(df):
     """
     if df.empty or 'value' not in df.columns or 'period' not in df.columns:
         return pd.DataFrame()
-
-    # --- CHANGE: ADD OUTLIER COUNT TO GROUPING ---
     agg_funcs = {
         'value': 'mean',
-        'is_outlier': lambda x: x.sum() # Sum of True/False gives count of outliers
+        'is_outlier': lambda x: x.sum() 
     }
     
     total_stats = df.groupby(['animal_id', 'group']).agg(agg_funcs).reset_index()
@@ -389,7 +369,7 @@ def calculate_summary_stats_per_animal(df):
         
     summary_df.rename(columns={'Light': 'Light_Average', 'Dark': 'Dark_Average'}, inplace=True)
     
-    # --- CHANGE: ADD OUTLIER COUNT TO FINAL COLS ---
+
     final_cols = ['animal_id', 'group', 'Light_Average', 'Dark_Average', 'Total_Average', 'Outlier_Count']
     existing_cols = [col for col in final_cols if col in summary_df.columns]
     
