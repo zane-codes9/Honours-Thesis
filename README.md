@@ -1,4 +1,4 @@
-# CLAMSer
+# CLAMSer: High-Throughput Analysis of Metabolic Data from the CLAMS Oxymax Machine
 
 [![Status](https://img.shields.io/badge/Status-Beta-orange.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
