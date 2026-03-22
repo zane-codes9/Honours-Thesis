@@ -79,6 +79,7 @@ def main():
                     6.  Metrics and charts are calculated and displayed.
                     
                     7.  Final summary tables and the complete processed dataset are prepared for export.
+                    
                     """
                 )
                 st.markdown("---")
