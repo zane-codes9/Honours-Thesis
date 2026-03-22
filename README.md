@@ -2,7 +2,8 @@
 
 A Software for High-Throughput Analysis of Metabolic Data from the CLAMS Oxymax Machine
 
-<img width="851" height="202" alt="Screenshot 2026-03-22 at 4 03 52 pm" src="https://github.com/user-attachments/assets/dbe08ac2-708e-4f26-8407-d9ade0a4bb05" />
+<img width="720" height="405" alt="image" src="https://github.com/user-attachments/assets/499277a2-64c9-4f44-bbd8-d65237c2485b" />
+
 
 [![Status](https://img.shields.io/badge/Status-Beta-orange.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
