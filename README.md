@@ -11,7 +11,7 @@ Metabolic data analysis is laborious and time-consuming. CLAMSer is an open-sour
 
 Done in completion of honours thesis for my BSc. 
 
-**[➡️ Application](https://clamser.streamlit.app/)**
+**[➡️ Click here to go to the Application](https://clamser.streamlit.app/)**
 
 **[▶️ Video Walkthrough](https://www.youtube.com/watch?v=LuBnGmRzcB8)**
 
