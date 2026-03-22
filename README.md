@@ -1,4 +1,4 @@
-# CLAMSer: High-Throughput Analysis of Metabolic Data from the CLAMS Oxymax Machine
+# CLAMSer: A Software for High-Throughput Analysis of Metabolic Data from the CLAMS Oxymax Machine
 
 <img width="634" height="935" alt="image" src="https://github.com/user-attachments/assets/e0d11826-ac24-4de6-bc19-a7bbafbf9da7" />
 
