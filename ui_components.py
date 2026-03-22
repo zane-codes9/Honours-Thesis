@@ -16,29 +16,27 @@ def load_and_parse_files(uploaded_files):
 
     for file in uploaded_files:
         try:
-            # First-pass filter: Only attempt to read CSV files.
             if not file.name.lower().endswith('.csv'):
-                continue # Silently skip non-csv files like .PDTA, .ELOG, etc.
+                continue 
 
             file_content = file.getvalue().decode('utf-8', errors='ignore')
             lines = file_content.splitlines()
         except Exception as e:
-            # This is a file-read error, worth mentioning.
+
             files_with_parsing_errors.append(f"{file.name} (could not be read: {e})")
             continue
-
-        # Step 1: Attempt to parse the header.
+            
         parameter, animal_ids_map, data_start_line = processing.parse_clams_header(lines)
 
         if data_start_line == -1:
             continue
 
-        # If it has :DATA but no parameter, it's malformed.
+
         if parameter is None:
             files_with_parsing_errors.append(f"{file.name} (has a ':DATA' marker but no 'Paramter' line was found)")
             continue
         
-        # If we got this far, the header is valid. Now parse data table.
+
         df_tidy = processing.parse_clams_data(lines, data_start_line, animal_ids_map)
         
         if df_tidy is not None and not df_tidy.empty:
@@ -47,7 +45,6 @@ def load_and_parse_files(uploaded_files):
             parsed_data[parameter] = df_tidy
             all_animal_ids.update(df_tidy['animal_id'].unique())
         else:
-            # This file had a valid header but its data section failed to parse. This is a legitimate issue
             files_with_parsing_errors.append(f"{file.name} (header was OK, but data table could not be parsed)")
 
     if files_with_parsing_errors:
@@ -67,7 +64,7 @@ def load_and_parse_files(uploaded_files):
             "and that they have not been modified.",
             icon="🚨"
         )
-        st.stop() # Halt the script if no data was loaded at all.
+        st.stop() 
 
     return parsed_data, sorted(param_options), sorted(list(all_animal_ids))
 
@@ -106,7 +103,6 @@ def render_analysis_controls(param_options):
     st.markdown("---")
     st.subheader("Light/Dark Cycle")
     
-    # UI CLARIFICATION ---
     st.caption("Define the light period using 24-hour format. The time outside this range will be considered the dark period.")
     light_start = st.slider("Light Cycle START Hour", 0, 23, 7, key="light_start")
     light_end = st.slider("Light Cycle END Hour", 0, 23, 19, key="light_end")
@@ -126,35 +122,30 @@ def render_main_view():
     st.title("(beta) CLAMSer: Analysis in Three Steps")
     st.markdown("---")
 
-    # --- Step 1 Description ---
-    st.header("Step 1: Setup Groups & Mass Data")
+    st.header("Step 1: Upload your CSV files)
     st.caption(
-        "After uploading your raw CSV files in the sidebar, this section will appear. "
-        "Here you will define your experimental groups and, optionally, provide body weight or lean mass values for normalization."
+        "Start by uploading all CLAMS data files on the left."
     )
     st.markdown("---")
 
     # --- Step 2 Description ---
-    st.header("Step 2: Process & Review Results")
+    st.header("Step 2: Define your experimental groups")
     st.caption(
-        "After your setup is complete, you will click the main 'Process' button. "
-        "This will generate interactive charts, key metrics, and summary data tables for your review."
+        "Define your animal groups and, optionally, provide body weight or lean mass values for normalization."
     )
     st.markdown("---")
 
     # --- Step 3 Description ---
-    st.header("Step 3: Export Your Results")
+    st.header("Step 3: Analyze Data")
     st.caption(
-        "Once the results are generated, you can download your clean, aggregated summary data as a CSV file. "
-        "This file is formatted for direct use in Prism, SPSS, or your preferred statistical software."
+        "Choose desired timeline/parameters to analyze. Once results are generated, you can download your data as a CSV file for use in Prism"
     )
     st.markdown("---")
-    st.info("To begin, please upload your CLAMS data files using the sidebar uploader.", icon="👈")
+    st.info("To begin, upload your CLAMS data files using the sidebar.", icon="👈")
 
 def _update_group_assignments_callback():
     """
     Callback function to read all group UI widgets and update session_state.
-    This is the core of the new reactive logic.
     """
     num_groups = st.session_state.get('num_groups', 1)
     new_assignments = {}
@@ -170,20 +161,18 @@ def _update_group_assignments_callback():
             for animal in selected_animals:
                 if animal in all_assigned_in_new_state:
                     st.warning(f"Animal '{animal}' cannot be in multiple groups. Reverting some changes.")
-                    # To prevent inconsistent state, no update
                     return
             
             new_assignments[group_name] = selected_animals
             all_assigned_in_new_state.update(selected_animals)
             
     st.session_state.group_assignments = new_assignments
-    st.toast("Group assignments updated!", icon="👍")
+    st.toast("Group assignments updated")
 
 
 def render_group_assignment_ui(all_animal_ids):
     """
     Renders a live, reactive UI for group assignment.
-    Changes are captured instantly via callbacks, no 'Update' button needed.
     """
     st.subheader("Assign Animals to Experimental Groups")
     st.caption("Define your groups below. Animals not assigned to any group will be labeled 'Unassigned'.")
@@ -202,7 +191,6 @@ def render_group_assignment_ui(all_animal_ids):
     num_groups = st.session_state.get('num_groups', 1)
     cols = st.columns(num_groups)
 
-    # Get a snapshot of all animals assigned right now
     all_assigned_animals = {animal for members in st.session_state.group_assignments.values() for animal in members}
 
     for i in range(num_groups):
@@ -249,7 +237,6 @@ def render_mass_ui(mass_type_label: str, key_prefix: str, help_text: str):
     st.subheader(f"{mass_type_label} Input (Optional)")
     st.caption(f"Provide {mass_type_label.lower()} data by either uploading a CSV file or pasting values directly.")
     
-    # Use unique keys for each instance of this UI component
     radio_key = f"{key_prefix}_input_method"
     uploader_key = f"{key_prefix}_uploader"
     manual_text_key = f"{key_prefix}_manual_text"
