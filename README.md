@@ -31,5 +31,6 @@ If you have a moment, please provide feedback on the questions:
 * The goal of CLAMSer is to be a "bridge" to statistical software. Does the exported CSV provide the data in a format that would be immediately useful for you in Prism, R, SPSS, or other?
 
 --
+
 # Acknowledgments
 We thank the Menzies Laboratory at the University of Ottawa for generously providing CLAMS datasets to test this software.  Please send any thoughts, bug reports, or suggestions to Zane Khartabill (me) at `mkhal061@uottawa.ca` or [open an issue](https://github.com/zane-codes9/CLAMSer/issues) on this GitHub repository. Thanks!
