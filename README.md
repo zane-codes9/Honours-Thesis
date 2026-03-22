@@ -1,6 +1,6 @@
 # CLAMSer: A Software for High-Throughput Analysis of Metabolic Data from the CLAMS Oxymax Machine
 
-<img width="634" height="935" alt="image" src="https://github.com/user-attachments/assets/e0d11826-ac24-4de6-bc19-a7bbafbf9da7" />
+<img width="851" height="202" alt="Screenshot 2026-03-22 at 4 03 52 pm" src="https://github.com/user-attachments/assets/dbe08ac2-708e-4f26-8407-d9ade0a4bb05" />
 
 [![Status](https://img.shields.io/badge/Status-Beta-orange.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
