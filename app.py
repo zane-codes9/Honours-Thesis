@@ -15,7 +15,7 @@ def main():
     with st.sidebar:
         st.header("File Upload")
         uploaded_files = st.file_uploader(
-            "Upload CLAMS Data Files",
+            "Upload CLAMS Files",
             accept_multiple_files=True,
             type=["csv"],
             key="main_file_uploader",
@@ -56,7 +56,7 @@ def main():
             ):
                 st.markdown(
                     """
-                    **CLAMSer** is an open-source tool designed to accelerate the initial analysis of metabolic data from Columbus Instruments Oxymax CLAMS systems.
+                    **CLAMSer** is an open-source tool designed to automate analysis of metabolic data from Columbus Instruments Oxymax CLAMS systems.
                     """
                 )
                 st.markdown("---")
@@ -64,9 +64,9 @@ def main():
                     """
                     **Methodology**
                     
-                    CLAMSer follows the following pipeline:
+                    Here's how it works:
                     
-                    1.  The app reads your uploaded `.csv` files, detects the parameter (e.g., `VO2`), and structures the raw data into a clean (tidy) format.
+                    1.  The app reads your uploaded `.csv` files, detects the parameter (e.g., `VO2`), and structures the raw data into a clean format.
                     
                     2.  For cumulative parameters (like `FEED1 ACC`), the app calculates the interval data (the change between measurements).
                     
@@ -74,34 +74,18 @@ def main():
                     
                     4.  Experimental group assignments are applied. If you provide mass data, the app normalizes the values.
                     
-                    5.  Data points that fall outside specified standard deviation threshold for each animal are flagged. **these outliers are highlighted but are not removed from any calculations**.
+                    5.  Data points that fall outside specified standard deviation threshold for each animal are flagged.
                     
-                    6.  Key metrics are calculated and displayed. Interactive charts for group averages and timelines are generated.
+                    6.  Metrics and charts are calculated and displayed.
                     
-                    7.  Final summary tables and the complete processed dataset are prepared for one-click export as analysis-ready `.csv` files.
+                    7.  Final summary tables and the complete processed dataset are prepared for export.
                     """
                 )
                 st.markdown("---")
                 st.markdown(
                     """
-                    **Citation, Contact & Credits**
-
-                    *Developer:* Zane Khartabill
                     
-                    *Contributing Authors:* Abolfazl Nik Akhtar, Dr. Keir Menzies
-
-                    **How to Cite:** This tool is currently under beta-testing. For now, please cite this tool by name (CLAMSer) and link to host location. Thanks!
-                    
-                    A formal manuscript describing CLAMSer is in preparation.
-
-                    **Acknowledgments:** We are grateful for members of the Menzies Laboratory at the University of Ottawa for their support, as well as providing the sample datasets used for developing and testing this tool. 
-                    
-                    This application was built in Python and relies on the following open-source libraries:
-                    - Streamlit (UI)
-                    - Pandas (data manipulation)
-                    - Plotly (visuals)
-                    
-                    For questions, bug reports/feedback, email Zane Khartabill at mkhal061@ottawa.ca
+                    This tool is currently under beta-testing, and a formal citation is underway. For questions, bug reports/feedback, email Zane Khartabill at mkhal061@ottawa.ca
                 
                     """
     
