@@ -1,5 +1,7 @@
 # CLAMSer: High-Throughput Analysis of Metabolic Data from the CLAMS Oxymax Machine
 
+<img width="634" height="935" alt="image" src="https://github.com/user-attachments/assets/e0d11826-ac24-4de6-bc19-a7bbafbf9da7" />
+
 [![Status](https://img.shields.io/badge/Status-Beta-orange.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
@@ -14,10 +16,6 @@ Done in completion of honours thesis for my BSc.
 **[▶️ Video Walkthrough](https://www.youtube.com/watch?v=LuBnGmRzcB8)**
 
 ---
-
-<img width="422" height="622" alt="Screenshot 2026-03-22 at 3 47 24 pm" src="https://github.com/user-attachments/assets/2fa2ca46-b5ec-4376-9c6d-04f1d5b09796" />
-
-## Features of CLAMSer
 
 *   Upload all your raw `.csv` files at once (batch processing)
 *   Analyze entire dataset or use presets for the last 24/48/72 hours, or custom window.
