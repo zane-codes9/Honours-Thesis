@@ -110,7 +110,7 @@ def main():
         
         if not st.session_state.param_options and uploaded_files:
             st.error(
-                "Upload Error: We couldn't find any valid CLAMS parameters in the uploaded files. Please check that the files are correctly formatted and contain a ':DATA' marker."
+                "Couldn't find any valid CLAMS parameters in the uploaded files. Check that the files are correctly formatted and contain a ':DATA' marker."
             )
         if "group_assignments" not in st.session_state:
             st.session_state.group_assignments = {}
@@ -118,16 +118,10 @@ def main():
             st.session_state.num_groups = 1
         st.rerun()
 
-    # ==============================================================================
-    # --- START OF NEW "THREE-STEP WORKFLOW" LAYOUT ---
-    # ==============================================================================
     
-    # --- PHASE 1 or 2: Conditional UI for Setup vs. Analysis ---
     if not st.session_state.get('setup_locked', False):
-        # --- RENDER SETUP UI ---
-        st.header("Step 1: Setup Workspace")
-        
-        # --- DATA OVERVIEW FEATURE ---
+        st.header("Step 1: Setup")
+
         selected_param_for_overview = st.session_state.get("selected_parameter", st.session_state.param_options[0])
         overview_df = st.session_state.parsed_data[selected_param_for_overview]
         if not overview_df.empty:
@@ -136,7 +130,7 @@ def main():
             duration = max_ts - min_ts
             duration_hours = duration.total_seconds() / 3600
             st.info(f"**Data Overview for '{selected_param_for_overview}':** Found data spanning from **{min_ts.strftime('%Y-%m-%d %H:%M')}** to **{max_ts.strftime('%Y-%m-%d %H:%M')}** (Total Duration: **{duration_hours:.1f} hours**).", icon="ℹ️")
-        # --- END DATA OVERVIEW ---
+
 
         with st.expander("Assign Experimental Groups", expanded=True):
             ui.render_group_assignment_ui(st.session_state.animal_ids)
@@ -157,7 +151,7 @@ def main():
                 if lm_error_msg: st.error(f"Lean Mass Data Error: {lm_error_msg}")
                 elif parsed_lm_map is not None and parsed_lm_map != st.session_state.get('lean_mass_map', {}):
                     st.session_state.lean_mass_map = parsed_lm_map
-                    if parsed_lm_map: st.toast(f"Updated lean mass for {len(parsed_lm_map)} animals.", icon="💪")
+                    if parsed_lm_map: st.toast(f"Updated lean mass for {len(parsed_lm_map)} animals.")
             
             st.markdown("---")
             st.write("**Parsed Mass Data Confirmation:**")
@@ -171,21 +165,21 @@ def main():
 
         st.markdown("---")
         
-        # This button now LOCKS the setup and triggers the analysis
+
         st.header("Step 2: Process & Analyze Data")
         if st.button("Process & Analyze Data", type="primary", use_container_width=True):
             st.session_state.run_analysis = True
             st.session_state.setup_locked = True
-            st.rerun() # Force an immediate rerun to lock the UI
+            st.rerun() 
 
     else:
-        # --- RENDER LOCKED UI ---
+
         st.info("Setup Complete. You can now interact with the results below.")
         st.caption("To re-configure groups or mass data, please upload a new set of files using the sidebar.")
 
     st.markdown("---")
 
-    # --- RESULTS SECTION ---
+
     if st.session_state.get('run_analysis', False):
         st.header("Step 3: Review Results & Export")
         st.radio(
@@ -221,12 +215,12 @@ def main():
                 st.session_state.get('lean_mass_map', {})
             )
 
-            if norm_error: st.warning(norm_error, icon="⚠️")
+            if norm_error: st.warning(norm_error)
             if missing_ids: 
                 mass_type = "mass"
                 if "Body Weight" in normalization_mode: mass_type = "body weight"
                 if "Lean Mass" in normalization_mode: mass_type = "lean mass"
-                st.warning(f"No {mass_type} data found for the following animals, which were excluded from normalization: {', '.join(map(str, missing_ids))}", icon="⚠️")
+                st.warning(f"No {mass_type} data found for the following animals, which were excluded from normalization: {', '.join(map(str, missing_ids))}")
 
             if not df_normalized.empty:
                 st.subheader(f"Key Metrics for {selected_param} ({normalization_mode})")
@@ -245,7 +239,7 @@ def main():
                 st.plotly_chart(bar_chart_fig, use_container_width=True)
 
                 st.markdown("---")
-                st.subheader("Interactive Timeline Display Options")
+                st.subheader("Timeline Options")
                 available_groups = sorted(df_normalized['group'].unique())
                 selected_groups = st.multiselect(
                     "Select groups to display on the timeline:",
@@ -255,7 +249,7 @@ def main():
                 )
                 df_for_timeline = df_normalized[df_normalized['group'].isin(selected_groups)]
                 
-                st.subheader(f"Interactive Timeline for {selected_param}")
+                st.subheader(f"Timeline for {selected_param}")
                 if not df_for_timeline.empty:
                     timeline_fig = plotting.create_timeline_chart(df_for_timeline, light_start, light_end, selected_param)
                     st.plotly_chart(timeline_fig, use_container_width=True)
