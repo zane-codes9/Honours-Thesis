@@ -32,5 +32,5 @@ If you have a moment, please provide feedback on the questions:
 
 --
 
-# Acknowledgments
+## Acknowledgments
 We thank the Menzies Laboratory at the University of Ottawa for generously providing CLAMS datasets to test this software.  Please send any thoughts, bug reports, or suggestions to Zane Khartabill (me) at `mkhal061@uottawa.ca` or [open an issue](https://github.com/zane-codes9/CLAMSer/issues) on this GitHub repository. Thanks!
