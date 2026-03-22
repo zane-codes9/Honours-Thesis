@@ -37,8 +37,4 @@ If you have a moment, please provide feedback on the questions:
 * Does the application address the most critical, time-consuming parts of your initial data processing? Are there any omissions in the core feature set (e.g., a specific normalization method, a key summary statistic)?
 * The goal of CLAMSer is to be a "bridge" to statistical software. Does the exported CSV provide the data in a format that would be immediately useful for you in Prism, R, SPSS, or other?
 
-Please send any thoughts, bug reports, or suggestions to Zane Khartabill (me) at `mkhal061@uottawa.ca` or [open an issue](https://github.com/zane-codes9/CLAMSer/issues) on this GitHub repository.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+Please send any thoughts, bug reports, or suggestions to Zane Khartabill (me) at `mkhal061@uottawa.ca` or [open an issue](https://github.com/zane-codes9/CLAMSer/issues) on this GitHub repository. Thanks!
