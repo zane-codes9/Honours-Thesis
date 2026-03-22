@@ -2,33 +2,29 @@
 
 A Software for High-Throughput Analysis of Metabolic Data from the CLAMS Oxymax Machine
 
+<img width="4523" height="2475" alt="Picture 1" src="https://github.com/user-attachments/assets/9f019a16-7b98-4724-97cc-60ac4e9fb0f0" />
+
 <img width="720" height="405" alt="image" src="https://github.com/user-attachments/assets/ef39cae8-ca8b-4dce-a9e2-d9114590fec6" />
 
-
+<img width="1458" height="415" alt="Screenshot 2026-03-22 at 4 46 27 pm" src="https://github.com/user-attachments/assets/d5ab8b26-32e5-41c8-91a1-08d1e6f911ff" />
 
 [![Status](https://img.shields.io/badge/Status-Beta-orange.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.33+-ff4b4b.svg)](https://streamlit.io)
 
-Metabolic data analysis is laborious and time-consuming. CLAMSer is an open-source, completely free tool for metabolic data processing. Specifically tailored for Columbus Instruments CLAMS systems, common in molecular biology labs. 
 
-Done in completion of honours thesis for my BSc. 
 
 **[➡️ Click here to go to the Application](https://clamser.streamlit.app/)**
 
 **[▶️ Video Walkthrough](https://www.youtube.com/watch?v=LuBnGmRzcB8)**
 
----
+--
+## About
 
-*   Upload all your raw `.csv` files at once (batch processing)
-*   Analyze entire dataset or use presets for the last 24/48/72 hours, or custom window.
-*   Define experimental groups
-*   Switch results view between **Absolute**, **Body Weight Normalized**, and **Lean Mass Normalized** values.
-*   Visualize timeline charts (color-coded by group) and summary bar charts.
-*   Download summary CSV files ready for statistical software (SPSS, Jamovi, GraphPad Prism).
+Metabolic data analysis is laborious and time-consuming. CLAMSer is an open-source, completely free tool for metabolic data processing. Specifically tailored for Columbus Instruments CLAMS systems, common in molecular biology labs. Done in completion of honours thesis for my BSc - presented at ISHS conference, University of Ottawa, manuscript submitted.
 
----
+--
 
 ## Feedback & Beta Status
 
@@ -42,9 +38,4 @@ If you have a moment, please provide feedback on the questions:
 
 --
 # Acknowledgments
-We thank the Menzies Laboratory at the University of Ottawa for generously providing CLAMS datasets to test this software. 
-
-
-
-
-Please send any thoughts, bug reports, or suggestions to Zane Khartabill (me) at `mkhal061@uottawa.ca` or [open an issue](https://github.com/zane-codes9/CLAMSer/issues) on this GitHub repository. Thanks!
+We thank the Menzies Laboratory at the University of Ottawa for generously providing CLAMS datasets to test this software.  Please send any thoughts, bug reports, or suggestions to Zane Khartabill (me) at `mkhal061@uottawa.ca` or [open an issue](https://github.com/zane-codes9/CLAMSer/issues) on this GitHub repository. Thanks!
